@@ -1,18 +1,20 @@
-// src/users/user.entity.ts
+import { Role } from 'src/roles/roles.enum';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name:'users'})
+@Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column({unique:true})
-  name: string;
+  @Column({ unique: true })
+  username: string;
+
+  @Column()
+  password: string;
 
   @Column()
   email: string;
 
-  @Column()
-  password: string;
+  @Column('text', { array: true, default: '{}' })
+  roles: Role[]; // store roles as a comma-separated string
 }
-

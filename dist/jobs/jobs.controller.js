@@ -16,18 +16,28 @@ exports.JobsController = void 0;
 const common_1 = require("@nestjs/common");
 const jobs_service_1 = require("./jobs.service");
 const jobs_entity_1 = require("./jobs.entity");
+const create_job_dto_1 = require("./dto/create-job.dto");
 let JobsController = class JobsController {
     constructor(jobsService) {
         this.jobsService = jobsService;
+    }
+    async create(createJobDto) {
+        try {
+            const job = await this.jobsService.create(createJobDto);
+            return job;
+        }
+        catch (error) {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Failed to create job',
+            }, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     findAll() {
         return this.jobsService.findAll();
     }
     findOne(id) {
         return this.jobsService.findOne(id);
-    }
-    create(job) {
-        return this.jobsService.create(job);
     }
     update(id, job) {
         return this.jobsService.update(id, job);
@@ -37,6 +47,13 @@ let JobsController = class JobsController {
     }
 };
 exports.JobsController = JobsController;
+__decorate([
+    (0, common_1.Post)('create'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_job_dto_1.CreateJobDto]),
+    __metadata("design:returntype", Promise)
+], JobsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -51,14 +68,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], JobsController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [jobs_entity_1.jobs]),
-    __metadata("design:returntype", Promise)
-], JobsController.prototype, "create", null);
-__decorate([
-    (0, common_1.Put)(':id'),
+    (0, common_1.Put)('modify/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -66,7 +76,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], JobsController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),

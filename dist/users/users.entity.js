@@ -15,22 +15,26 @@ let User = class User {
 };
 exports.User = User;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], User.prototype, "username", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
+    (0, typeorm_1.Column)('text', { array: true, default: '{}' }),
+    __metadata("design:type", Array)
+], User.prototype, "roles", void 0);
 exports.User = User = __decorate([
-    (0, typeorm_1.Entity)({ name: 'users' })
+    (0, typeorm_1.Entity)('users')
 ], User);
 //# sourceMappingURL=users.entity.js.map

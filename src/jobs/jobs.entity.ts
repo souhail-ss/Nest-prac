@@ -11,6 +11,7 @@ export class jobs{
   @Column()
   Details_Job:string;
 
+  
 }
 
 

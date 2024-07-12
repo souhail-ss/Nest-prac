@@ -19,7 +19,8 @@ exports.JobsModule = JobsModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([jobs_entity_1.jobs])],
         controllers: [jobs_controller_1.JobsController],
-        providers: [jobs_service_1.JobsService]
+        providers: [jobs_service_1.JobsService],
+        exports: [jobs_service_1.JobsService],
     })
 ], JobsModule);
 //# sourceMappingURL=jobs.module.js.map

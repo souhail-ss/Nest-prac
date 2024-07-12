@@ -17,24 +17,35 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const users_entity_1 = require("./users.entity");
+const bcrypt = require("bcrypt");
+const roles_enum_1 = require("../roles/roles.enum");
 let UsersService = class UsersService {
     constructor(usersRepository) {
         this.usersRepository = usersRepository;
     }
-    findAll() {
+    async findAll() {
         return this.usersRepository.find();
     }
-    findOne(id) {
-        return this.usersRepository.findOneBy({ id });
+    async findOne(id) {
+        return this.usersRepository.findOne({ where: { id } });
     }
-    create(user) {
+    async create(createUserDto) {
+        const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+        const user = this.usersRepository.create({
+            ...createUserDto,
+            password: hashedPassword,
+            roles: [roles_enum_1.Role.USER]
+        });
         return this.usersRepository.save(user);
     }
-    async update(id, user) {
-        await this.usersRepository.update(id, user);
+    async findOneByUsername(username) {
+        return this.usersRepository.findOne({ where: { username } });
     }
     async remove(id) {
         await this.usersRepository.delete(id);
+    }
+    async deleteAll() {
+        await this.usersRepository.clear();
     }
 };
 exports.UsersService = UsersService;
