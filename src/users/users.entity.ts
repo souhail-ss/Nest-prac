@@ -1,8 +1,10 @@
 import { Role } from 'src/roles/roles.enum';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { jobs } from '../jobs/jobs.entity'
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('users')
 export class User {
+ 
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
@@ -17,4 +19,9 @@ export class User {
 
   @Column('text', { array: true, default: '{}' })
   roles: Role[]; // store roles as a comma-separated string
+
+  // @OneToMany(() => jobs, job => job.creator  )
+  // jobs: jobs[]; 
+
+
 }

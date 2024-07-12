@@ -11,15 +11,15 @@ export class CreateJobDto {
   Description: string;
 
   @IsString()
-  Image:string;
+  Image?:string;
 
   @IsString()
-  Cover:string;
+  Cover?:string;
 
   @IsString()
   Status:string;
 
-
+  createdBy: string; 
 
 
 

@@ -30,11 +30,13 @@ let UsersService = class UsersService {
         return this.usersRepository.findOne({ where: { id } });
     }
     async create(createUserDto) {
-        const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+        const { username, email, password } = createUserDto;
+        const hashedPassword = await bcrypt.hash(password, 10);
         const user = this.usersRepository.create({
-            ...createUserDto,
+            username,
+            email,
             password: hashedPassword,
-            roles: [roles_enum_1.Role.USER]
+            roles: [roles_enum_1.Role.USER],
         });
         return this.usersRepository.save(user);
     }

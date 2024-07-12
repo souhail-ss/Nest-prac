@@ -15,9 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
+const register_dto_1 = require("./register/register.dto");
+const users_service_1 = require("../users/users.service");
 let AuthController = class AuthController {
-    constructor(authService) {
+    constructor(authService, usersService) {
         this.authService = authService;
+        this.usersService = usersService;
     }
     async login(body) {
         try {
@@ -31,6 +34,21 @@ let AuthController = class AuthController {
             throw new common_1.HttpException('Internal server error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async register(registerDto) {
+        try {
+            const userExists = await this.usersService.findOneByUsername(registerDto.username);
+            if (userExists) {
+                throw new common_1.HttpException('Username already taken', common_1.HttpStatus.BAD_REQUEST);
+            }
+            const newUser = await this.usersService.create(registerDto);
+            const loginResult = await this.authService.login(newUser);
+            return loginResult;
+        }
+        catch (error) {
+            console.error('Error registering user:', error);
+            throw new common_1.HttpException('Internal server error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -40,8 +58,16 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('register'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "register", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService,
+        users_service_1.UsersService])
 ], AuthController);
 //# sourceMappingURL=auth.controller.js.map

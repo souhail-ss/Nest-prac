@@ -22,12 +22,23 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
+  // async create(createUserDto: CreateUserDto): Promise<User> {
+  //   const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+  //   const user = this.usersRepository.create({
+  //     ...createUserDto,
+  //     password: hashedPassword,
+  //     roles:[Role.USER]
+  //   });
+  //   return this.usersRepository.save(user);
+  // }
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const { username, email, password } = createUserDto;
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = this.usersRepository.create({
-      ...createUserDto,
+      username,
+      email,
       password: hashedPassword,
-      roles:[Role.USER]
+      roles: [Role.USER], // Assign default role here
     });
     return this.usersRepository.save(user);
   }

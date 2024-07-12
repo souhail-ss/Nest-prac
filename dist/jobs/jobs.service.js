@@ -28,7 +28,7 @@ let JobsService = class JobsService {
         return this.jobsRepository.findOneBy({ id });
     }
     async create(createJobDto) {
-        const { Title, Description, Status, Image, Cover } = createJobDto;
+        const { Title, Description, Status, Image, Cover, createdBy } = createJobDto;
         const job = new jobs_entity_1.jobs();
         job.Title = Title;
         job.Description = Description;

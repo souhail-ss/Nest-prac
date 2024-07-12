@@ -4,12 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { CreateJobDto } from './dto/create-job.dto';
+import { User } from 'src/users/users.entity';
 
 @Injectable()
 export class JobsService {
 constructor(
     @InjectRepository(jobs)
     private jobsRepository: Repository<jobs>,
+    // @InjectRepository(User)
+    // private readonly userRepository: Repository<User>,
   ) {}
 
   findAll(): Promise<jobs[]> {
@@ -21,14 +24,24 @@ constructor(
   }
 
   async create(createJobDto: CreateJobDto): Promise<jobs> {
-    const { Title, Description, Status, Image, Cover } = createJobDto;
+    const { Title, Description, Status, Image, Cover ,createdBy } = createJobDto;
+// 
+    // const user = await this.userRepository.findOne({ where: { username: createdBy } });
+
+    // if (!user) {
+    //   throw new Error(`User with username '${createdBy}' not found.`);
+    // }
+
     const job = new jobs();
+    
     job.Title =Title;
     job.Description = Description;
     job.Status =Status;
    
     job.Image = Buffer.from(createJobDto.Image,'base64');
     job.Cover = Buffer.from(createJobDto.Cover,'base64');
+    // job.createdBy = createdBy; 
+    // job.creator = user;
 
 
 

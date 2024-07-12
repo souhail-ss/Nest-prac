@@ -1,5 +1,6 @@
 import { isNotEmpty, IsOptional } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/users.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity({ name: 'jobs' })
 export class jobs {
@@ -21,4 +22,12 @@ export class jobs {
 
   @Column({})
   Status: string;
+
+  // @Column()
+  // createdBy: string; // This will store the username of the creator
+
+  // // Example of a many-to-one relationship with a User entity (assuming one job has one creator)
+  // @ManyToOne(() => User, user => user.jobs)
+  // creator: User;
+
 }
