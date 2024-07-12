@@ -1,19 +1,24 @@
+import { isNotEmpty, IsOptional } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name:'jobs'})
-export class jobs{
-  @PrimaryGeneratedColumn()
+@Entity({ name: 'jobs' })
+export class jobs {
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
-  Title_Job:string;
+  Title: string;
 
   @Column()
-  Details_Job:string;
+  Description: string;
 
-  
+  @Column({ type: 'bytea', nullable: true })
+  Image: Buffer;
+  // @isNotEmpty()
+
+  @Column({ type: 'bytea', nullable: true })
+  Cover: Buffer;
+
+  @Column({})
+  Status: string;
 }
-
-
-  
-

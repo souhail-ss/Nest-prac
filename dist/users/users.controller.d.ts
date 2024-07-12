@@ -4,7 +4,6 @@ export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     findAll(): Promise<import("./users.entity").User[]>;
-    create(createUserDto: CreateUserDto): Promise<import("./users.entity").User>;
     findOne(id: string): Promise<import("./users.entity").User>;
     remove(id: string): Promise<void>;
     createIt(createUserDto: CreateUserDto): Promise<{

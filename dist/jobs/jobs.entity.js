@@ -15,17 +15,29 @@ let jobs = class jobs {
 };
 exports.jobs = jobs;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", Number)
 ], jobs.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], jobs.prototype, "Title_Job", void 0);
+], jobs.prototype, "Title", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], jobs.prototype, "Details_Job", void 0);
+], jobs.prototype, "Description", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'bytea', nullable: true }),
+    __metadata("design:type", Buffer)
+], jobs.prototype, "Image", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'bytea', nullable: true }),
+    __metadata("design:type", Buffer)
+], jobs.prototype, "Cover", void 0);
+__decorate([
+    (0, typeorm_1.Column)({}),
+    __metadata("design:type", String)
+], jobs.prototype, "Status", void 0);
 exports.jobs = jobs = __decorate([
     (0, typeorm_1.Entity)({ name: 'jobs' })
 ], jobs);

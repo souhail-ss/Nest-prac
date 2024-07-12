@@ -15,15 +15,23 @@ class CreateJobDto {
 }
 exports.CreateJobDto = CreateJobDto;
 __decorate([
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", Number)
-], CreateJobDto.prototype, "id", void 0);
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateJobDto.prototype, "Title", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateJobDto.prototype, "Title_Job", void 0);
+], CreateJobDto.prototype, "Description", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateJobDto.prototype, "Details_Job", void 0);
+], CreateJobDto.prototype, "Image", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateJobDto.prototype, "Cover", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateJobDto.prototype, "Status", void 0);
 //# sourceMappingURL=create-job.dto.js.map

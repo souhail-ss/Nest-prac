@@ -2,13 +2,27 @@ import { IsInt, IsNumber, IsString, IsUUID } from 'class-validator';
 
 // src/users/dto/create-user.dto.ts
 export class CreateJobDto {
-  @IsUUID()
-  id: number;
+
 
   @IsString()
-  Title_Job: string;
+  Title: string;
   
   @IsString()
-  Details_Job: string;
+  Description: string;
+
+  @IsString()
+  Image:string;
+
+  @IsString()
+  Cover:string;
+
+  @IsString()
+  Status:string;
+
+
+
+
+
+  
 
 }

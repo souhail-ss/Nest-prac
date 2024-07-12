@@ -27,9 +27,6 @@ let UsersController = class UsersController {
     findAll() {
         return this.usersService.findAll();
     }
-    create(createUserDto) {
-        return this.usersService.create(createUserDto);
-    }
     findOne(id) {
         return this.usersService.findOne(+id);
     }
@@ -59,15 +56,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "create", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),

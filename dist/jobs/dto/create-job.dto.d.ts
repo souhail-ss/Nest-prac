@@ -1,5 +1,7 @@
 export declare class CreateJobDto {
-    id: number;
-    Title_Job: string;
-    Details_Job: string;
+    Title: string;
+    Description: string;
+    Image: string;
+    Cover: string;
+    Status: string;
 }

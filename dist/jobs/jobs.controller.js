@@ -16,21 +16,24 @@ exports.JobsController = void 0;
 const common_1 = require("@nestjs/common");
 const jobs_service_1 = require("./jobs.service");
 const jobs_entity_1 = require("./jobs.entity");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const create_job_dto_1 = require("./dto/create-job.dto");
+const roles_decorator_1 = require("../roles/roles.decorator");
+const roles_enum_1 = require("../roles/roles.enum");
+const roles_guard_1 = require("../roles/roles.guard");
 let JobsController = class JobsController {
     constructor(jobsService) {
         this.jobsService = jobsService;
     }
     async create(createJobDto) {
         try {
-            const job = await this.jobsService.create(createJobDto);
-            return job;
+            return this.jobsService.create(createJobDto);
         }
         catch (error) {
             throw new common_1.HttpException({
                 status: common_1.HttpStatus.BAD_REQUEST,
                 error: 'Failed to create job',
-            }, common_1.HttpStatus.BAD_REQUEST);
+            }, common_1.HttpStatus.BAD_REQUEST + error);
         }
     }
     findAll() {
@@ -49,6 +52,7 @@ let JobsController = class JobsController {
 exports.JobsController = JobsController;
 __decorate([
     (0, common_1.Post)('create'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_job_dto_1.CreateJobDto]),
@@ -56,12 +60,16 @@ __decorate([
 ], JobsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], JobsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -69,6 +77,8 @@ __decorate([
 ], JobsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Put)('modify/:id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -77,6 +87,8 @@ __decorate([
 ], JobsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
