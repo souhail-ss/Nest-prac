@@ -22,6 +22,12 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
+  async upgradeToAdmin(id: any): Promise<User | undefined> {
+     const user = await this.usersRepository.findOne({ where: { id:id} });
+    user.roles = [Role.ADMIN];
+     return await this.usersRepository.save(user);
+  }
+
   // async create(createUserDto: CreateUserDto): Promise<User> {
   //   const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
   //   const user = this.usersRepository.create({
@@ -31,16 +37,17 @@ export class UsersService {
   //   });
   //   return this.usersRepository.save(user);
   // }
-  async create(createUserDto: CreateUserDto): Promise<User> {
+    async create(createUserDto: CreateUserDto,user:User): Promise<User|string> {
     const { username, email, password } = createUserDto;
+    if(user?.username =="ziyadi") return "Wa baraka azbiii";
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = this.usersRepository.create({
+    const createdUser = this.usersRepository.create({
       username,
       email,
       password: hashedPassword,
       roles: [Role.USER], // Assign default role here
     });
-    return this.usersRepository.save(user);
+     return this.usersRepository.save(createdUser);  
   }
 
   async findOneByUsername(username: string): Promise<User | undefined> {

@@ -40,7 +40,7 @@ let AuthController = class AuthController {
             if (userExists) {
                 throw new common_1.HttpException('Username already taken', common_1.HttpStatus.BAD_REQUEST);
             }
-            const newUser = await this.usersService.create(registerDto);
+            const newUser = await this.usersService.create(registerDto, null);
             const loginResult = await this.authService.login(newUser);
             return loginResult;
         }

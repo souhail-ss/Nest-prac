@@ -5,14 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateJobDto } from './dto/create-job.dto';
 import { User } from 'src/users/users.entity';
+import { stringify } from 'querystring';
 
 @Injectable()
 export class JobsService {
 constructor(
     @InjectRepository(jobs)
     private jobsRepository: Repository<jobs>,
-    // @InjectRepository(User)
-    // private readonly userRepository: Repository<User>,
+
   ) {}
 
   findAll(): Promise<jobs[]> {
@@ -25,7 +25,7 @@ constructor(
 
   async create(createJobDto: CreateJobDto): Promise<jobs> {
     const { Title, Description, Status, Image, Cover ,createdBy } = createJobDto;
-// 
+  
     // const user = await this.userRepository.findOne({ where: { username: createdBy } });
 
     // if (!user) {

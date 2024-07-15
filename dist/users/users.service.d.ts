@@ -6,7 +6,8 @@ export declare class UsersService {
     constructor(usersRepository: Repository<User>);
     findAll(): Promise<User[]>;
     findOne(id: number): Promise<User | undefined>;
-    create(createUserDto: CreateUserDto): Promise<User>;
+    upgradeToAdmin(id: any): Promise<User | undefined>;
+    create(createUserDto: CreateUserDto, user: User): Promise<User | string>;
     findOneByUsername(username: string): Promise<User | undefined>;
     remove(id: number): Promise<void>;
     deleteAll(): Promise<void>;

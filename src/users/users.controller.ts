@@ -77,13 +77,14 @@
 //     }
 //   }
 // }
-import { Controller, Get, Post, Body, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Logger } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../roles/roles.guard';
 import { Roles } from '../roles/roles.decorator';
 import { Role } from 'src/roles/roles.enum';
+import { User } from 'src/decorators/user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -115,9 +116,19 @@ export class UsersController {
   @Post('create')
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async createIt(@Body() createUserDto: CreateUserDto) {
+  async createIt(@User() user ,@Body() createUserDto: CreateUserDto) {
     try {
-      const user = await this.usersService.create({...createUserDto});
+      return await this.usersService.create({...createUserDto},user);
+    } catch (error) {
+      throw new Error('Failed to create user'+error);
+    }
+  }
+  @Post('upgrade')
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async upgrade(@User() user,@Body() body: any) {
+    try {
+      const userg = await this.usersService.upgradeToAdmin(body.id);
       return {
         status: 'success',
         message: 'User successfully created',

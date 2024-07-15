@@ -29,16 +29,23 @@ let UsersService = class UsersService {
     async findOne(id) {
         return this.usersRepository.findOne({ where: { id } });
     }
-    async create(createUserDto) {
+    async upgradeToAdmin(id) {
+        const user = await this.usersRepository.findOne({ where: { id: id } });
+        user.roles = [roles_enum_1.Role.ADMIN];
+        return await this.usersRepository.save(user);
+    }
+    async create(createUserDto, user) {
         const { username, email, password } = createUserDto;
+        if (user?.username == "ziyadi")
+            return "Wa baraka azbiii";
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = this.usersRepository.create({
+        const createdUser = this.usersRepository.create({
             username,
             email,
             password: hashedPassword,
             roles: [roles_enum_1.Role.USER],
         });
-        return this.usersRepository.save(user);
+        return this.usersRepository.save(createdUser);
     }
     async findOneByUsername(username) {
         return this.usersRepository.findOne({ where: { username } });

@@ -20,6 +20,7 @@ const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const roles_guard_1 = require("../roles/roles.guard");
 const roles_decorator_1 = require("../roles/roles.decorator");
 const roles_enum_1 = require("../roles/roles.enum");
+const user_decorator_1 = require("../decorators/user.decorator");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -33,9 +34,17 @@ let UsersController = class UsersController {
     remove(id) {
         return this.usersService.remove(+id);
     }
-    async createIt(createUserDto) {
+    async createIt(user, createUserDto) {
         try {
-            const user = await this.usersService.create({ ...createUserDto });
+            return await this.usersService.create({ ...createUserDto }, user);
+        }
+        catch (error) {
+            throw new Error('Failed to create user' + error);
+        }
+    }
+    async upgrade(user, body) {
+        try {
+            const userg = await this.usersService.upgradeToAdmin(body.id);
             return {
                 status: 'success',
                 message: 'User successfully created',
@@ -78,11 +87,22 @@ __decorate([
     (0, common_1.Post)('create'),
     (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:paramtypes", [Object, create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "createIt", null);
+__decorate([
+    (0, common_1.Post)('upgrade'),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.ADMIN),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "upgrade", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

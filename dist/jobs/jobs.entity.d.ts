@@ -5,4 +5,5 @@ export declare class jobs {
     Image: Buffer;
     Cover: Buffer;
     Status: string;
+    CreatedBy?: string;
 }

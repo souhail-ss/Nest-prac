@@ -23,11 +23,12 @@ export class jobs {
   @Column({})
   Status: string;
 
-  // @Column()
-  // createdBy: string; // This will store the username of the creator
+  @Column({ type: 'varchar', nullable: true })
+  CreatedBy?: string; // This will store the username of the creator
 
-  // // Example of a many-to-one relationship with a User entity (assuming one job has one creator)
-  // @ManyToOne(() => User, user => user.jobs)
+  // Example of a many-to-one relationship with a User entity (assuming one job has one creator)
+  // @ManyToOne(() => User, user => user.)
   // creator: User;
+
 
 }

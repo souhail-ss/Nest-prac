@@ -32,7 +32,7 @@ export class AuthController {
         throw new HttpException('Username already taken', HttpStatus.BAD_REQUEST);
       }
   
-      const newUser = await this.usersService.create(registerDto);
+      const newUser = await this.usersService.create(registerDto,null);
       const loginResult = await this.authService.login(newUser);
   
       return loginResult;

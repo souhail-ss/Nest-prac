@@ -6,9 +6,10 @@ export declare class UsersController {
     findAll(): Promise<import("./users.entity").User[]>;
     findOne(id: string): Promise<import("./users.entity").User>;
     remove(id: string): Promise<void>;
-    createIt(createUserDto: CreateUserDto): Promise<{
+    createIt(user: any, createUserDto: CreateUserDto): Promise<string | import("./users.entity").User>;
+    upgrade(user: any, body: any): Promise<{
         status: string;
         message: string;
-        data: import("./users.entity").User;
+        data: any;
     }>;
 }

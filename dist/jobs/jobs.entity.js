@@ -38,6 +38,10 @@ __decorate([
     (0, typeorm_1.Column)({}),
     __metadata("design:type", String)
 ], jobs.prototype, "Status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    __metadata("design:type", String)
+], jobs.prototype, "CreatedBy", void 0);
 exports.jobs = jobs = __decorate([
     (0, typeorm_1.Entity)({ name: 'jobs' })
 ], jobs);
